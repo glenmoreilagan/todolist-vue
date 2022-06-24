@@ -51,7 +51,7 @@ export default {
       }
     },
     saveTodo(todo) {
-      const new_todo_obj = {...this.todo_obj, todoId : this.todos.length + 1}
+      const new_todo_obj = {...todo, todoId : this.todos.length + 1}
       this.todos.push(new_todo_obj)
       // console.log(new_todo_obj)
     }
