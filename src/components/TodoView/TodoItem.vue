@@ -12,7 +12,8 @@
           <td>{{ todo.todoId }}</td>
           <td>{{ todo.todoDesc }}</td>
           <td>
-            <button class="btn btn-primary btn-sm btn-action" @click="$emit('todoAction', {todo, action : 'edit'})">EDIT</button>
+            <!-- <button class="btn btn-primary btn-sm btn-action" @click="$emit('todoAction', {todo, action : 'edit'})">EDIT</button> -->
+            <router-link class="" :to="'/todo/'+todo.todoId"><button class="btn btn-primary btn-sm btn-action">EDIT</button></router-link>
             <button class="btn btn-danger btn-sm btn-action" @click="$emit('todoAction', {todoId : todo.todoId, action : 'delete'})">DELETE</button>
           </td>
         </tr>

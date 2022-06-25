@@ -30,12 +30,30 @@ export default {
         todoDesc : "", 
         isCompelte : false
       },
-      todos : [
-        {todoId : 1, todoDesc : "todo 1", isCompelte : false},
-        {todoId : 2, todoDesc : "todo 2", isCompelte : true},
-        {todoId : 3, todoDesc : "todo 3", isCompelte : false}
-      ]
+      todos : [],
     }
+  },
+  created() {
+    console.log('Component has been created!')
+    this.axios.get('http://127.0.0.1:8000/api/todo')
+    .then(res => {
+      NProgress.start()
+      // console.log(res.data.todos)
+      this.todos = res.data.todos.map((value, index) => ({
+        todoId : value.id,
+        todoDesc : value.todo,
+        isCompelte : value.iscomplete
+      }))
+      NProgress.done()
+    }).catch(error => {
+      console.log(error)
+    })
+  },
+  mounted() {
+    console.log('Component has been mounted!')
+  },
+  destroyed() {
+    console.log('Component has been destroyed!')
   },
   methods : {
     todoAction(data) {
@@ -46,14 +64,36 @@ export default {
         break;
         case 'delete':
           // console.log(data)
-          this.todos = this.todos.filter(todo => todo.todoId !== data.todoId)
+          this.axios.delete(`http://127.0.0.1:8000/api/todo/${data.todoId}`)
+          .then(res => {
+            // console.log(res)
+            NProgress.start()
+            if(res.data.status) {
+              this.todos = this.todos.filter(todo => todo.todoId !== data.todoId)
+              NProgress.done()
+            }
+          }).catch(error => {
+            console.log(error)
+          })
         break;
       }
     },
     saveTodo(todo) {
-      const new_todo_obj = {...todo, todoId : this.todos.length + 1}
-      this.todos.push(new_todo_obj)
-      // console.log(new_todo_obj)
+      this.axios.post('http://127.0.0.1:8000/api/todo', todo)
+      .then(res => {
+        // console.log(res)
+        NProgress.start()
+        if(res.data.status) {
+          this.todos.push({
+            todoId : res.data.todos.id,
+            todoDesc : res.data.todos.todo,
+            isCompelte : res.data.todos.iscomplete
+          });
+          NProgress.done()
+        }
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 }
