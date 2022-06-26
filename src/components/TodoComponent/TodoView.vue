@@ -5,8 +5,8 @@
     <h5 class="card-header">HOME</h5>
     !-->
     <div class="card-body">
-      
-      <AddTodo v-bind:todo_obj="todo_obj" v-on:save-todo="saveTodo" />
+      <router-link class="" :to="'/todo'"><button class="btn btn-primary btn-sm btn-action">NEW</button></router-link>
+      <!-- <AddTodo v-bind:todo_obj="todo_obj" v-on:save-todo="saveTodo" /> -->
       <TodoItem v-bind:todos="todos" v-on:todoAction="todoAction" />
     </div>
   </div>
@@ -18,7 +18,7 @@ import AddTodo from './AddTodo.vue'
 import TodoItem from './TodoItem.vue'
 
 export default {
-  name : 'HomeView',
+  name : 'TodoView',
   components : {
     AddTodo,
     TodoItem,
@@ -28,7 +28,7 @@ export default {
        todo_obj : {
         todoId : 0, 
         todoDesc : "", 
-        isCompelte : false
+        isComplete : false
       },
       todos : [],
     }
@@ -42,7 +42,7 @@ export default {
       this.todos = res.data.todos.map((value, index) => ({
         todoId : value.id,
         todoDesc : value.todo,
-        isCompelte : value.iscomplete
+        isComplete : value.iscomplete
       }))
       NProgress.done()
     }).catch(error => {
@@ -58,10 +58,10 @@ export default {
   methods : {
     todoAction(data) {
       switch(data.action) {
-        case 'edit':
+        // case 'edit':
           // console.log(data.todo)
-          this.todo_obj = {...this.todo_obj, todoDesc : data.todo.todoDesc, todoId : data.todo.todoId}
-        break;
+          // this.todo_obj = {...this.todo_obj, todoDesc : data.todo.todoDesc, todoId : data.todo.todoId}
+        // break;
         case 'delete':
           // console.log(data)
           this.axios.delete(`http://127.0.0.1:8000/api/todo/${data.todoId}`)
@@ -87,7 +87,7 @@ export default {
           this.todos.push({
             todoId : res.data.todos.id,
             todoDesc : res.data.todos.todo,
-            isCompelte : res.data.todos.iscomplete
+            isComplete : res.data.todos.iscomplete
           });
           NProgress.done()
         }

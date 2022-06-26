@@ -2,8 +2,15 @@
 <div class="container">
   <div class="card mt-3 mb-3">
     <div class="card-body">
+      <h4>EDIT TODO</h4>
       <label for="" class="inputs-label">Todos:</label>
       <input class="form-control form-control-sm" type="text" v-model="todo_obj.todoDesc">
+      <div class="form-check">
+        <label class="form-check-label inputs-label" for="flexCheckDefault">
+        Done?
+        <input class="form-check-input" type="checkbox" id="flexCheckDefault" v-model="todo_obj.isComplete" :checked="isComplete_checked">
+        </label>
+      </div>
       <button type="button" class="btn btn-primary btn-sm btn-save" @click="saveTodo">SAVE</button>
     </div>
   </div>
@@ -16,10 +23,11 @@ export default {
   data() {
     return {
       todoId: this.$route.params.id,
+      isComplete_checked : "",
       todo_obj : {
         todoId : this.$route.params.id, 
         todoDesc : "", 
-        isCompelte : false
+        isComplete : false
       },
     }
   },
@@ -33,7 +41,11 @@ export default {
         this.todo_obj = {
           todoId : res.data.todo.id,
           todoDesc : res.data.todo.todo,
-          isCompelte : res.data.todo.iscomplete,
+          isComplete : res.data.todo.iscomplete,
+        }
+
+        if(res.data.todo.iscomplete) {
+          this.isComplete_checked = "checked"
         }
       }
       NProgress.done()
@@ -48,6 +60,9 @@ export default {
         // console.log(res)
         NProgress.start()
         if(res.data.status) {
+          if(res.data.todo.iscomplete) {
+            this.isComplete_checked = ""
+          }
           NProgress.done()
         }
       }).catch(error => {

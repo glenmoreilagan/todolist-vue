@@ -4,6 +4,7 @@
         <tr>
           <th>ID</th>
           <th>TODO</th>
+          <th>STATUS</th>
           <th>ACTION</th>
         </tr>
       </thead>
@@ -11,6 +12,7 @@
         <tr v-for="todo in todos" :key="todo.todoId">
           <td>{{ todo.todoId }}</td>
           <td>{{ todo.todoDesc }}</td>
+          <td>{{ todo.isComplete ? "Done" : "Pending" }}</td>
           <td>
             <!-- <button class="btn btn-primary btn-sm btn-action" @click="$emit('todoAction', {todo, action : 'edit'})">EDIT</button> -->
             <router-link class="" :to="'/todo/'+todo.todoId"><button class="btn btn-primary btn-sm btn-action">EDIT</button></router-link>
