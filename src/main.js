@@ -11,7 +11,8 @@ import EditTodo from "@/components/TodoComponent/EditTodo.vue";
 
 import JobPosting from "@/components/JobComponent/JobPosting.vue";
 
-import LoginView from "@/components/LoginComponent/LoginView.vue";
+import LoginComponent from "@/components/LoginComponent/LoginComponent.vue";
+import RegisterComponent from "@/components/LoginComponent/RegisterComponent.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,7 +23,8 @@ const router = createRouter({
 
     { path : '/jobs', component : JobPosting },
     
-    { path : '/login', component : LoginView },
+    { path : '/login', component : LoginComponent },
+    { path : '/register', component : RegisterComponent },
   ],
 });
 
