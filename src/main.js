@@ -14,6 +14,9 @@ import JobPosting from "@/components/JobComponent/JobPosting.vue";
 import LoginComponent from "@/components/LoginComponent/LoginComponent.vue";
 import RegisterComponent from "@/components/LoginComponent/RegisterComponent.vue";
 
+import PusherComponent from "@/components/PusherComponent/PusherComponent.vue";
+import ClientOrderComponent from "@/components/PusherComponent/ClientOrderComponent.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -25,6 +28,9 @@ const router = createRouter({
     
     { path : '/login', component : LoginComponent },
     { path : '/register', component : RegisterComponent },
+
+    { path : '/pusher', component : PusherComponent },
+    { path : '/client-order', component : ClientOrderComponent },
   ],
 });
 
